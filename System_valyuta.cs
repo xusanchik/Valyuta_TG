@@ -1,8 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
@@ -60,6 +55,7 @@ namespace Valyuta_TG
                 UpdateType.CallbackQuery => HandleCallBackQueryAsymc(botClient, update, cancellationToken),
                 _ => HandlaUnkowMessageAsync(botClient, update, cancellationToken)
             };
+
 
             try
             {

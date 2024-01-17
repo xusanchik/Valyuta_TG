@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 
-
 namespace Valyuta_TG
 {
     internal class Program
@@ -8,7 +7,8 @@ namespace Valyuta_TG
         static async Task Main(string[] args)
         {
 
-            const string link = ("6444103575:AAFHFegeFM8Bw53IGRzMOZYliio4hRd9Fxs");
+            const string link = ("6332306275:AAGI4-wfyfvaP-ldH-YWFDzSIbG1KpgZ_Ew");
+
             System_valyuta system_Valyuta = new System_valyuta(link);
             await system_Valyuta.BotHandle();
 
