@@ -1,24 +1,18 @@
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+using Valyuta_TG;
 
 namespace Valyuta_TG
 {
-    public class System_valyuta
+    public record System_valyuta(string Token)
     {
-
-        public string Token { get; set; }
-        public System_valyuta(string token)
-        {
-            this.Token = token;
-        }
-
         public async Task BotHandle()
         {
-            var botClient = new TelegramBotClient($"{this.Token}");
+            TelegramBotClient? botClient = new TelegramBotClient($"{this.Token}");
 
             using CancellationTokenSource cts = new();
 
@@ -48,6 +42,7 @@ namespace Valyuta_TG
         async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
 
+
             var handlar = update.Type switch
             {
                 UpdateType.Message => HandlaMessageAsync(botClient, update, cancellationToken),
@@ -65,11 +60,12 @@ namespace Valyuta_TG
             {
                 Console.WriteLine($"Error Chiqdi! {ex.Message}");
             }
+
         }
 
 
 
-        async Task HandleCallBackQueryAsymc(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        public async Task HandleCallBackQueryAsymc(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
 
 
@@ -141,6 +137,20 @@ namespace Valyuta_TG
                     chatId: update.CallbackQuery.From.Id,
                    text: update.CallbackQuery.Data,
                     cancellationToken: cancellationToken);
+                string name = update.CallbackQuery?.Data;
+
+
+
+
+
+
+
+                Hisobla hisobla = new Hisobla(update.CallbackQuery.Data);
+
+                hisobla.ShowName(botClient, update, cancellationToken);
+
+
+
 
             }
 
@@ -174,6 +184,8 @@ namespace Valyuta_TG
 
         async Task HandlaTextMessageAsync(ITelegramBotClient? botClient, Update update, CancellationToken cancellationToken)
         {
+
+
             Console.WriteLine($"Received a '{update.Message.Text}' message in chat ,{update.Message.Chat.Id} ");
 
             var button = InlineKeyboardButton.WithCallbackData(text: "Davay", callbackData: "Yes");
@@ -215,7 +227,9 @@ namespace Valyuta_TG
             return Task.CompletedTask;
         }
 
-
+        internal Task HandleCallBackQueryAsymc(List<Model>? courses)
+        {
+            throw new NotImplementedException();
+        }
     }
-
 }
